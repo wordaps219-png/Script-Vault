@@ -1274,19 +1274,58 @@ function applyI18n(){
   if(currentId){ const id=currentId; openDetail(id); }
 }
 
-/* ================= Loader ================= */
+/* ================= Loader (FIXED FOR GITHUB PAGES) ================= */
 function runLoader(done){
-  const links=[...document.querySelectorAll('link[rel="stylesheet"]')];
-  const imgs=[...document.querySelectorAll('img')];
-  const total=links.length+imgs.length+1;
-  let loaded=0, finished=false;
-  const label=$('#loadLabel'), fill=$('#loadFill');
-  const pad=n=>String(n).padStart(4,'0');
-  function paint(){
-    const pct=Math.min(100,Math.round(loaded/total*100));
-    label.innerHTML='Assets: <b>'+pad(loaded)+'</b> / '+pad(total)+' ('+pct+'%)';
-    fill.style.width=pct+'%';
+  const fill = $('#loadFill');
+  const label = $('#loadLabel');
+  let progress = 0;
+  let finished = false;
+  
+  // Simulasi loading yang lebih halus & tidak bergantung penuh pada event link/img
+  // Ini mencegah stuck akibat CORS di GitHub Pages
+  const interval = setInterval(() => {
+    if(finished) return;
+    // Kecepatan loading: cepat di awal, melambat mendekati 90%
+    const remaining = 100 - progress;
+    progress += Math.max(0.5, remaining * 0.08); 
+    
+    if(progress > 92) progress = 92; // Tahan di 92% sampai aset benar-benar siap
+    
+    const pct = Math.round(progress);
+    label.innerHTML = `Assets: <b>${String(pct).padStart(4,'0')}</b> / 0100 (${pct}%)`;
+    fill.style.width = pct + '%';
+  }, 30);
+
+  function finish(){
+    if(finished) return;
+    finished = true;
+    clearInterval(interval);
+    
+    // Animasi ke 100% lalu hilangkan loader
+    fill.style.width = '100%';
+    label.innerHTML = 'Assets: <b>0100</b> / 0100 (100%)';
+    
+    setTimeout(() => {
+      $('#loader').classList.add('hide');
+      setTimeout(() => { 
+        const el = $('#loader');
+        if(el) el.remove(); 
+        done(); 
+      }, 620);
+    }, 300);
   }
+
+  // Gunakan Promise.race: Selesai jika SEMUA font siap ATAU maksimal 2.5 detik
+  // 2.5 detik jauh lebih baik daripada 8 detik jika ada masalah CORS
+  const fontsReady = (document.fonts && document.fonts.ready) 
+    ? document.fonts.ready 
+    : Promise.resolve();
+    
+  const timeout = new Promise(r => setTimeout(r, 2500));
+  
+  Promise.race([fontsReady, timeout]).then(finish).catch(finish);
+  }
+  
   function finish(){
     if(finished) return; finished=true;
     loaded=total; paint();
