@@ -34,7 +34,7 @@
   --accent-glow:rgba(212,175,55,.32); --accent-soft:rgba(212,175,55,.07);
   --text:#ece9e2; --muted:rgba(236,233,226,.62); --faint:rgba(236,233,226,.4);
   --line:rgba(212,175,55,.18); --line2:rgba(255,255,255,.08);
-  --panel:rgba(255,255,255,.035); --red:#e06a5a;
+  --panel:rgba(255,255,255,.035); --red:#e06a5a; --green:#5fc46f;
   --font-body:'Manrope',system-ui,sans-serif;
   --font-display:'Playfair Display',Georgia,serif;
 }
@@ -101,17 +101,20 @@ nav a:hover::after{width:100%}
 
 /* ===== Buttons ===== */
 .btn-gold{
-  display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;
   background:linear-gradient(135deg,var(--accent-2) 0%,var(--accent) 45%,var(--accent-3) 100%);
   color:var(--accent-ink);font-family:var(--font-body);font-weight:700;font-size:14px;
   padding:12px 26px;border-radius:100px;letter-spacing:.3px;
   box-shadow:0 4px 24px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.45);
-  transition:transform .25s, box-shadow .25s, filter .25s;
+  transition:transform .25s, box-shadow .25s, filter .25s, opacity .25s;
 }
 .btn-gold:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 8px 34px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.45)}
 .btn-gold:active{transform:translateY(0)}
 .btn-gold.sm{padding:9px 18px;font-size:13px}
-.btn-gold.wide{width:100%;justify-content:center;padding:15px}
+.btn-gold.wide{width:100%;padding:15px}
+.btn-gold.scanning{pointer-events:none;opacity:.8;filter:saturate(.6)}
+.btn-gold.banned{pointer-events:none;opacity:.75;filter:grayscale(.5) brightness(.85)}
+.btn-gold.locked,.btn-ghost.locked{opacity:.6;cursor:not-allowed;transform:none!important}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:var(--panel);
   border:1px solid var(--line2);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13.5px;
@@ -124,6 +127,7 @@ nav a:hover::after{width:100%}
   padding:11px 18px;border-radius:100px;transition:all .25s;
 }
 .btn-danger:hover{background:rgba(224,106,90,.12);border-color:var(--red)}
+.btn-danger.locked{opacity:.65;border-style:dashed;cursor:not-allowed}
 .icon-btn{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;transition:color .2s,transform .2s;line-height:1}
 .icon-btn:hover{color:var(--accent-2);transform:rotate(90deg)}
 
@@ -136,7 +140,7 @@ nav a:hover::after{width:100%}
 }
 .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(38px,6.2vw,68px);line-height:1.14;letter-spacing:-.5px;animation:fadeUp .8s .22s both}
 .hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--accent-2),var(--accent) 45%,var(--accent-3));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{color:var(--muted);font-size:16.5px;max-width:620px;margin:22px auto 36px;line-height:1.75;animation:fadeUp .8s .34s both}
+.hero p{color:var(--muted);font-size:16.5px;max-width:640px;margin:22px auto 36px;line-height:1.75;animation:fadeUp .8s .34s both}
 .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .46s both}
 .stats{display:flex;justify-content:center;margin-top:62px;flex-wrap:wrap;animation:fadeUp .8s .58s both}
 .stat{padding:0 46px;border-right:1px solid var(--line2)}
@@ -197,11 +201,18 @@ nav a:hover::after{width:100%}
   padding:6px 13px;border-radius:100px;color:var(--accent-ink);
   background:linear-gradient(135deg,var(--accent-2),var(--accent));box-shadow:0 3px 12px rgba(0,0,0,.4);
 }
+.sys-badge{
+  position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 12px;border-radius:100px;color:var(--text);background:rgba(8,8,12,.72);
+  border:1px solid var(--line);backdrop-filter:blur(4px);display:flex;align-items:center;gap:5px;
+}
+.sys-badge i{font-style:normal;font-size:10px}
+.sys-badge.prot{color:#ffb0a5;border-color:rgba(224,106,90,.5)}
 .card-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
 .card-body h3{font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.3;margin-bottom:8px;transition:color .25s}
 .card:hover .card-body h3{color:var(--accent-2)}
 .card-body p{color:var(--muted);font-size:13.5px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:21px}
-.react{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line2);margin-top:15px}
+.react{display:flex;align-items:center;gap:8px;padding-top:14px;border-top:1px solid var(--line2);margin-top:15px}
 .rbtn{
   display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:transparent;border:1px solid var(--line2);
   color:var(--muted);font-family:var(--font-body);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:100px;transition:all .22s;
@@ -218,7 +229,7 @@ nav a:hover::after{width:100%}
 .empty .big{font-size:44px;margin-bottom:14px;color:var(--accent)}
 .empty h3{font-family:var(--font-display);font-size:24px;color:var(--text);margin-bottom:8px}
 
-/* laptop: kartu melebar menyamping (thumbnail kiri, judul kanan), berderet sampai ujung lalu turun ke baris baru */
+/* laptop: kartu melebar menyamping, berderet sampai ujung lalu turun ke baris baru */
 @media(min-width:1024px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(500px,1fr))}
   .card{display:grid;grid-template-columns:minmax(240px,44%) 1fr}
@@ -226,7 +237,7 @@ nav a:hover::after{width:100%}
   .card-body p{-webkit-line-clamp:3}
 }
 
-/* ===== Modals (umum) ===== */
+/* ===== Modals ===== */
 .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
 .modal.open{visibility:visible;opacity:1}
 .modal-back{position:absolute;inset:0;background:rgba(5,5,9,.8);backdrop-filter:blur(8px)}
@@ -237,11 +248,17 @@ nav a:hover::after{width:100%}
   transform:translateY(26px) scale(.97);transition:transform .35s cubic-bezier(.2,.8,.3,1.1);
 }
 .modal.open .modal-box{transform:none}
+.modal-box.shake{animation:shake .5s}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:linear-gradient(165deg,#15161f,#12131b);z-index:2}
 .modal-head h2{font-family:var(--font-display);font-size:22px;font-weight:700}
 .modal-head h2 i{color:var(--accent);font-style:normal;margin-right:6px}
 .modal-body{padding:26px 28px 30px;display:flex;flex-direction:column;gap:20px}
 .modal-sub{color:var(--faint);font-size:13px;margin-top:-14px}
+
+/* ban banner */
+.ban-bar{display:flex;gap:10px;align-items:center;background:rgba(224,106,90,.1);border:1px solid rgba(224,106,90,.5);color:#ffb4aa;padding:15px 18px;border-radius:14px;font-size:13.5px;line-height:1.55;animation:fadeUp .4s both}
+.ban-bar b{color:#fff;font-family:'JetBrains Mono',monospace}
 
 /* upload */
 .seg{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:14px;padding:5px;gap:5px}
@@ -254,8 +271,11 @@ nav a:hover::after{width:100%}
 .drop span{color:var(--faint);font-size:12.5px;font-weight:500}
 .file-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:13px;animation:fadeUp .4s both}
 .file-info .fn{font-weight:700;color:var(--accent-2);word-break:break-all}
-.file-info .pill{background:color-mix(in srgb,var(--accent) 18%,transparent);border:1px solid var(--line);color:var(--accent-2);font-size:11px;font-weight:700;padding:4px 11px;border-radius:100px;letter-spacing:.8px;text-transform:uppercase}
 .file-info .mut{color:var(--faint);font-weight:600}
+.langpick{display:flex;align-items:center;gap:8px;color:var(--faint);font-weight:700;font-size:12px;margin-left:auto}
+.langpick select{background:rgba(10,10,15,.65);border:1px solid var(--line2);color:var(--text);border-radius:9px;padding:6px 10px;font-family:var(--font-body);font-size:12.5px;font-weight:700;outline:none;cursor:pointer}
+.langpick select:focus{border-color:var(--accent)}
+.langpick select option{background:#15161f}
 .fld{display:flex;flex-direction:column;gap:8px}
 .fld>span{font-size:13px;font-weight:700;color:var(--text);letter-spacing:.3px}
 .fld>span i{font-style:normal;color:var(--faint);font-weight:500;font-size:12px}
@@ -267,7 +287,19 @@ nav a:hover::after{width:100%}
 .fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .fld select option{background:#15161f}
 .fld input::placeholder,.fld textarea::placeholder{color:var(--faint)}
-.row2{display:grid;grid-template-columns:1fr 190px;gap:14px;align-items:end}
+
+/* scan error */
+.scan-err{border:1px solid rgba(224,106,90,.55);background:rgba(224,106,90,.07);border-radius:18px;padding:20px 22px;animation:fadeUp .4s both}
+.scan-err .scan-head{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:18px;font-weight:700;color:#ff9a8a;margin-bottom:8px}
+.scan-err .scan-found{color:var(--muted);font-size:13.5px;margin-bottom:14px}
+.scan-item{background:rgba(10,10,15,.55);border:1px solid rgba(224,106,90,.3);border-radius:12px;padding:12px 15px;margin-bottom:9px}
+.scan-item .si-top{display:flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#ff9a8a;margin-bottom:7px;flex-wrap:wrap}
+.scan-item .si-top .si-rule{color:var(--faint);letter-spacing:.3px;text-transform:none;font-weight:600}
+.scan-item code{display:block;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#ffd9d2;background:rgba(0,0,0,.35);border-radius:8px;padding:9px 12px;overflow-x:auto;white-space:pre}
+.scan-ban{margin-top:12px;font-size:13.5px;font-weight:700;color:#ff9a8a}
+.scan-tip{margin-top:12px;font-size:12.5px;color:var(--faint);line-height:1.7;border-top:1px dashed rgba(224,106,90,.3);padding-top:12px}
+.scan-tip b{color:var(--accent-2)}
+
 .thumb-pick{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .thumb-btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px dashed color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent-2);background:var(--accent-soft);font-family:var(--font-body);font-weight:700;font-size:13px;padding:12px 20px;border-radius:13px;transition:all .25s}
 .thumb-btn:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:var(--accent)}
@@ -289,6 +321,17 @@ input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .set-row select{background:rgba(255,255,255,.035);border:1px solid var(--line2);border-radius:12px;color:var(--text);font-family:var(--font-body);font-size:13.5px;font-weight:600;padding:11px 14px;outline:none;cursor:pointer;min-width:180px}
 .set-row select:focus{border-color:var(--accent)}
 .set-row select option{background:#15161f}
+.manage-list{display:flex;flex-direction:column;gap:10px;max-height:300px;overflow-y:auto;padding-right:4px}
+.mrow{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:11px 14px;transition:border-color .25s}
+.mrow:hover{border-color:var(--line)}
+.mrow img{width:64px;height:40px;object-fit:cover;border-radius:8px;border:1px solid var(--line2);flex-shrink:0}
+.mrow .mt{flex:1;min-width:0}
+.mrow h4{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow small{color:var(--faint);font-size:11.5px;font-weight:600}
+.mrow small b{color:var(--accent-2);text-transform:uppercase;letter-spacing:.8px;font-size:10px}
+.mrow .mdel{cursor:pointer;background:rgba(224,106,90,.1);border:1px solid rgba(224,106,90,.35);color:var(--red);font-family:var(--font-body);font-weight:700;font-size:12px;padding:8px 15px;border-radius:100px;transition:all .22s;white-space:nowrap}
+.mrow .mdel:hover{background:rgba(224,106,90,.22)}
+.mrow .mlock{display:inline-flex;align-items:center;gap:6px;border:1px dashed var(--line);color:var(--accent-2);font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:100px;background:var(--accent-soft);white-space:nowrap}
 
 /* history */
 .hlist{display:flex;flex-direction:column;gap:12px}
@@ -309,12 +352,15 @@ input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .detail.open .detail-in{transform:none}
 .detail-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}
 .detail-actions{display:flex;gap:10px;flex-wrap:wrap}
-.detail-hero{border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 26px 70px rgba(0,0,0,.55), 0 0 50px var(--accent-soft);margin-bottom:30px}
+.detail-hero{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 26px 70px rgba(0,0,0,.55), 0 0 50px var(--accent-soft);margin-bottom:30px}
 .detail-hero img{width:100%;display:block;max-height:400px;object-fit:cover}
+.detail-hero .sys-badge{top:16px;right:16px;font-size:11px;padding:8px 15px}
 .detail h1{font-family:var(--font-display);font-size:clamp(28px,4.5vw,42px);font-weight:700;line-height:1.2;margin-bottom:16px}
 .d-meta{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
 .mchip{font-size:12px;font-weight:700;color:var(--muted);background:var(--panel);border:1px solid var(--line2);padding:7px 15px;border-radius:100px;letter-spacing:.4px}
 .mchip.gold{color:var(--accent-2);border-color:var(--line);background:var(--accent-soft);text-transform:uppercase;letter-spacing:1.2px}
+.mchip.safe{color:#8fe0a5;border-color:rgba(95,196,111,.4);background:rgba(95,196,111,.09)}
+.mchip.prot{color:#ffb0a5;border-color:rgba(224,106,90,.4);background:rgba(224,106,90,.08)}
 .d-sec{margin-bottom:38px}
 .d-sec>h3{font-family:var(--font-display);font-size:21px;font-weight:700;margin-bottom:16px}
 .d-sec>h3 i{color:var(--accent);font-style:normal;margin-right:8px;font-size:15px}
@@ -331,6 +377,7 @@ input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .dots{display:flex;gap:5px}
 .dots i{width:10px;height:10px;border-radius:50%;display:block}
 .dots i:nth-child(1){background:#e0604f}.dots i:nth-child(2){background:#e0b04f}.dots i:nth-child(3){background:#5fc46f}
+.prot-note{font-size:10.5px;letter-spacing:1px;color:#ffb0a5;border:1px solid rgba(224,106,90,.4);padding:4px 10px;border-radius:100px;background:rgba(224,106,90,.08);font-weight:800;text-transform:uppercase}
 .copy-mini{cursor:pointer;background:rgba(255,255,255,.05);border:1px solid var(--line2);color:var(--muted);font-family:var(--font-body);font-weight:700;font-size:11.5px;padding:6px 14px;border-radius:100px;transition:all .2s}
 .copy-mini:hover{color:var(--accent-2);border-color:var(--accent)}
 .codebox-scroll{max-height:420px;overflow:auto}
@@ -340,6 +387,8 @@ input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .codebox pre{margin:0;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;white-space:pre}
 .ln{position:sticky;left:0;z-index:2;padding:18px 14px;text-align:right;color:#454a56;background:#0c0d13;border-right:1px solid var(--line2);user-select:none;min-width:52px}
 .lc{padding:18px 22px;color:#dcd9d0}
+.codebox.protected .lc{user-select:none;-webkit-user-select:none;-moz-user-select:none}
+.codebox.protected .lc ::selection{background:transparent}
 .tk-com{color:#66707d;font-style:italic}
 .tk-str{color:#9ecf95}
 .tk-kw{color:#f0c95c}
@@ -367,7 +416,6 @@ body.locked{overflow:hidden}
   .hbtn .htxt{display:none}
   .stat{padding:0 22px}
   .stat b{font-size:26px}
-  .row2{grid-template-columns:1fr}
   .detail-top{flex-direction:column;align-items:stretch}
 }
 </style>
@@ -402,7 +450,7 @@ body.locked{overflow:hidden}
 <section class="hero" id="beranda">
   <div class="hero-badge" data-i18n="hero_badge">◆ Platform Berbagi Script Terbuka ◆</div>
   <h1 data-i18n="hero_title">Bagikan <em>Script</em> Terbaikmu<br>dengan Sentuhan <em>Kemewahan</em></h1>
-  <p data-i18n="hero_desc">ScriptVault adalah galeri komunitas tempat siapa saja bisa mengunggah, memamerkan, dan mengunduh script — HTML, Lua, JavaScript, Python, dan banyak lagi. Gratis, tanpa akun, selamanya.</p>
+  <p data-i18n="hero_desc">ScriptVault adalah galeri komunitas tempat siapa saja bisa mengunggah, memamerkan, dan mengunduh script — HTML, Lua, JavaScript, Python, dan banyak lagi. Script bahasa Lua, JavaScript, Python, dan Shell melewati pemeriksaan keamanan otomatis. Gratis, tanpa akun, selamanya.</p>
   <div class="hero-cta">
     <button class="btn-gold" onclick="openModal()">✦ <span data-i18n="cta_upload">Upload Script Sekarang</span></button>
     <a class="btn-ghost" href="#jelajah"><span data-i18n="cta_explore">Jelajahi Koleksi</span> ↓</a>
@@ -440,12 +488,15 @@ body.locked{overflow:hidden}
 <!-- ===== Modal Upload ===== -->
 <div class="modal" id="uploadModal" aria-hidden="true">
   <div class="modal-back" data-close="uploadModal"></div>
-  <div class="modal-box">
+  <div class="modal-box" id="uploadBox">
     <div class="modal-head">
       <h2><i>✦</i><span data-i18n="modal_upload">Upload Script</span></h2>
       <button class="icon-btn" data-close="uploadModal" aria-label="Tutup">✕</button>
     </div>
     <div class="modal-body">
+      <!-- banner blokir 3 menit -->
+      <div class="ban-bar" id="banBar" hidden></div>
+
       <div class="seg">
         <button type="button" class="seg-btn active" id="tabFile" data-i18n="tab_file">⇪ Upload File</button>
         <button type="button" class="seg-btn" id="tabPaste" data-i18n="tab_paste">⌨ Tempel Kode</button>
@@ -500,6 +551,15 @@ body.locked{overflow:hidden}
             <button type="button" id="thumbRemove" title="Hapus thumbnail">✕</button>
           </div>
         </div>
+      </div>
+
+      <!-- Panel hasil pemeriksaan keamanan -->
+      <div class="scan-err" id="scanErr" hidden>
+        <div class="scan-head">🛡 <span data-i18n="scan_failed">Pemeriksaan Keamanan Gagal</span></div>
+        <p class="scan-found" data-i18n="scan_found">Terdeteksi pola eksploitasi pada script kamu:</p>
+        <div id="scanList"></div>
+        <div class="scan-ban" data-i18n="ban_msg">Akses upload diblokir selama 3 menit karena pelanggaran keamanan.</div>
+        <p class="scan-tip" data-i18n="scan_hint">Aturan keamanan berlaku untuk Lua, JavaScript, Python, dan Shell.</p>
       </div>
 
       <button class="btn-gold wide" id="publishBtn" data-i18n="publish">Publikasikan Script ✦</button>
@@ -577,6 +637,12 @@ body.locked{overflow:hidden}
           </select>
         </div>
       </div>
+
+      <div class="fld">
+        <span>🗂 <span data-i18n="set_manage">Kelola Script</span> <i data-i18n="set_manage_sub">— script sistem terkunci dan tidak dapat dihapus</i></span>
+        <div class="manage-list" id="manageList"></div>
+      </div>
+
       <button class="btn-ghost" id="setReset" style="justify-content:center">↺ <span data-i18n="set_reset">Kembalikan Default</span></button>
     </div>
   </div>
@@ -593,7 +659,10 @@ body.locked{overflow:hidden}
         <button class="btn-danger" id="delBtn" data-i18n="delete">Hapus</button>
       </div>
     </div>
-    <div class="detail-hero"><img id="dImg" alt="thumbnail"></div>
+    <div class="detail-hero">
+      <img id="dImg" alt="thumbnail">
+      <span class="sys-badge" id="dSys" hidden><i>🔒</i> <span data-i18n="sys_script">Script Sistem</span></span>
+    </div>
     <h1 id="dTitle"></h1>
     <div class="d-meta" id="dMeta"></div>
 
@@ -605,10 +674,13 @@ body.locked{overflow:hidden}
 
     <section class="d-sec">
       <h3><i>◆</i><span data-i18n="sec_code">Kode Script</span></h3>
-      <div class="codebox">
+      <div class="codebox" id="codeBox">
         <div class="codebox-head">
           <div class="left"><div class="dots"><i></i><i></i><i></i></div><span id="codeLang"></span></div>
-          <button class="copy-mini" id="copyMini" data-i18n="copy_mini">Salin</button>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="prot-note" id="protNote" hidden data-i18n="prot_note">Proteksi Salin Aktif</span>
+            <button class="copy-mini" id="copyMini" data-i18n="copy_mini">Salin</button>
+          </div>
         </div>
         <div class="codebox-scroll">
           <div class="codebox-flex">
@@ -640,10 +712,10 @@ const I18N = {
     nav_home:'Beranda', nav_explore:'Jelajah', nav_history:'Riwayat', nav_settings:'Pengaturan', btn_upload:'Upload Script',
     hero_badge:'◆ Platform Berbagi Script Terbuka ◆',
     hero_title:'Bagikan <em>Script</em> Terbaikmu<br>dengan Sentuhan <em>Kemewahan</em>',
-    hero_desc:'ScriptVault adalah galeri komunitas tempat siapa saja bisa mengunggah, memamerkan, dan mengunduh script — HTML, Lua, JavaScript, Python, dan banyak lagi. Gratis, tanpa akun, selamanya.',
+    hero_desc:'ScriptVault adalah galeri komunitas tempat siapa saja bisa mengunggah, memamerkan, dan mengunduh script — HTML, Lua, JavaScript, Python, dan banyak lagi. Script bahasa Lua, JavaScript, Python, dan Shell melewati pemeriksaan keamanan otomatis. Gratis, tanpa akun, selamanya.',
     cta_upload:'Upload Script Sekarang', cta_explore:'Jelajahi Koleksi',
     stat_scripts:'Script', stat_downloads:'Unduhan', stat_lines:'Baris Kode',
-    collections:'Koleksi Script', hint_click:'Klik thumbnail untuk membuka detail script',
+    collections:'Koleksi Script', hint_click:'Klik thumbnail untuk membuka detail script', hint_open:'Lihat Detail ◆',
     search_ph:'Cari judul atau deskripsi script...', chip_all:'Semua', chip_saved:'★ Disimpan',
     empty_title:'Belum ada script di sini', empty_desc:'Jadilah yang pertama membagikan script mahakaryamu.',
     empty_saved_title:'Belum ada script yang disimpan', empty_saved_desc:'Tekan tombol 🔖 pada script untuk menyimpannya di sini.',
@@ -651,7 +723,8 @@ const I18N = {
     footer_text:'Galeri script komunitas. Semua script milik bersama, dibuat dengan ✦ oleh para kreator.',
     modal_upload:'Upload Script', tab_file:'⇪ Upload File', tab_paste:'⌨ Tempel Kode',
     drop_title:'Tarik & letakkan file script di sini', drop_sub:'atau klik untuk memilih — HTML, Lua, JS, Python, CSS, dll.',
-    lbl_lang:'Bahasa Script', lbl_title:'Judul Script *', title_ph:'cth: Sistem Teleport Pemain',
+    lbl_lang:'Bahasa Script', lbl_lang2:'Bahasa:',
+    lbl_title:'Judul Script *', title_ph:'cth: Sistem Teleport Pemain',
     lbl_desc:'Deskripsi', desc_ph:'Jelaskan secara singkat apa yang dilakukan script ini...',
     lbl_funcs:'Fungsi / Fitur', funcs_hint:'— satu fungsi per baris', funcs_ph:'Teleport instan ke lokasi tujuan\nMendukung semua pemain\nRingan tanpa delay',
     lbl_thumb:'Thumbnail', thumb_hint:'— opsional. Jika kosong, thumbnail dibuat otomatis dari script kamu',
@@ -661,6 +734,31 @@ const I18N = {
     no_desc:'Tidak ada deskripsi untuk script ini.', no_funcs:'Fungsi tidak dicantumkan oleh pembuat script.',
     confirm_del:'Hapus script ini secara permanen?',
     save_btn:'Simpan', saved_btn:'Tersimpan', lines_word:'baris', dl_word:'unduhan',
+    scan_ok:'🛡 Lolos Pemeriksaan',
+    sys_script:'Script Sistem',
+    sys_nodelete:'🔒 Tidak dapat dihapus — script ini milik sistem ScriptVault.',
+    scan_running:'🛡 Memeriksa keamanan script...',
+    scan_failed:'Pemeriksaan Keamanan Gagal',
+    scan_found:'Terdeteksi pola eksploitasi pada script kamu:',
+    scan_line:'Baris',
+    scan_hint:'Aturan keamanan berlaku untuk <b>Lua, JavaScript, Python, dan Shell</b>. Tipe HTML, CSS, dan JSON bebas teks (cocok untuk menampilkan script). Tipe TXT boleh berisi apa pun — termasuk loadstring — tetapi <b>dilindungi: tidak bisa disalin atau diseleksi</b>.',
+    scan_pass:'Script dinyatakan aman ✓',
+    ban_msg:'Akses upload diblokir selama 3 menit karena pelanggaran keamanan.',
+    ban_wait:'🚫 Diblokir — coba lagi dalam {t}',
+    ban_over:'Blokir berakhir. Kamu bisa upload lagi ✓',
+    txt_nocopy:'🔒 Script TXT terproteksi — teks tidak dapat disalin atau diseleksi.',
+    txt_nodl:'🔒 Script TXT terproteksi — tidak dapat diunduh.',
+    prot_btn:'Terproteksi', prot_badge:'Proteksi', prot_note:'Proteksi Salin Aktif',
+    prot_chip:'🔒 Proteksi Salin',
+    rule_r1:'Eksekusi jarak jauh: loadstring() + game:HttpGet()',
+    rule_r2:'Penggunaan loadstring() — eksekusi kode dinamis tidak diizinkan',
+    rule_r3:'API eksploitasi terdeteksi (getgenv / hookfunction, dll.)',
+    rule_r4:'eval() dengan sumber tidak aman (atob / fetch / game)',
+    rule_http:'Pemanggilan jarak jauh game:HttpGet()',
+    rule_fire:'Kata "fire*" dilarang (contoh: firetouchinterest) — hanya "FireServer" yang diizinkan',
+    rule_kw:'Kata eksploit terdeteksi (ESP / NOCLIP / FLY / INVISIBLE / Client-sided / Dex)',
+    set_manage:'Kelola Script', set_manage_sub:'— script sistem terkunci dan tidak dapat dihapus',
+    manage_empty:'Belum ada script yang bisa dikelola.',
     hist_title:'Riwayat Aktivitas', hist_sub:'Script yang pernah kamu buka, urut dari yang terbaru.',
     hist_empty:'Belum ada riwayat. Buka sebuah script dan jejakmu akan tercatat di sini.', hist_clear:'Bersihkan Riwayat',
     set_title:'Pengaturan Tampilan', set_accent:'Warna Aksen', set_accent_sub:'Tema warna utama seluruh website',
@@ -676,17 +774,17 @@ const I18N = {
     t_downloaded:'Script berhasil diunduh ⬇', t_saved:'Disimpan ke koleksi ★', t_unsaved:'Dihapus dari simpanan',
     t_gone:'Script sudah tidak tersedia.', t_hist_clear:'Riwayat dibersihkan.', t_thumb_img:'File harus berupa gambar.',
     t_black:'Warna hitam terdeteksi — dikembalikan ke default.', t_reset:'Pengaturan dikembalikan ke default.',
-    t_applied:'Pengaturan diterapkan ✓',
+    t_applied:'Pengaturan diterapkan ✓', t_txt_ok:'Tipe TXT: bebas teks, otomatis dilindungi dari penyalinan ✓',
     time_just:'baru saja', time_min:'{n} menit lalu', time_hour:'{n} jam lalu', time_day:'{n} hari lalu'
   },
   en: {
     nav_home:'Home', nav_explore:'Explore', nav_history:'History', nav_settings:'Settings', btn_upload:'Upload Script',
     hero_badge:'◆ Open Script Sharing Platform ◆',
     hero_title:'Share Your Best <em>Scripts</em><br>with a Touch of <em>Luxury</em>',
-    hero_desc:'ScriptVault is a community gallery where anyone can upload, showcase, and download scripts — HTML, Lua, JavaScript, Python, and more. Free, no account, forever.',
+    hero_desc:'ScriptVault is a community gallery where anyone can upload, showcase, and download scripts — HTML, Lua, JavaScript, Python, and more. Lua, JavaScript, Python, and Shell scripts pass an automatic security scan. Free, no account, forever.',
     cta_upload:'Upload a Script Now', cta_explore:'Explore the Collection',
     stat_scripts:'Scripts', stat_downloads:'Downloads', stat_lines:'Lines of Code',
-    collections:'Script Collection', hint_click:'Click a thumbnail to open the script details',
+    collections:'Script Collection', hint_click:'Click a thumbnail to open the script details', hint_open:'View Details ◆',
     search_ph:'Search script title or description...', chip_all:'All', chip_saved:'★ Saved',
     empty_title:'No scripts here yet', empty_desc:'Be the first to share your masterpiece.',
     empty_saved_title:'No saved scripts yet', empty_saved_desc:'Press the 🔖 button on a script to keep it here.',
@@ -694,7 +792,8 @@ const I18N = {
     footer_text:'A community script gallery. All scripts belong to everyone, crafted with ✦ by creators.',
     modal_upload:'Upload Script', tab_file:'⇪ Upload File', tab_paste:'⌨ Paste Code',
     drop_title:'Drag & drop your script file here', drop_sub:'or click to choose — HTML, Lua, JS, Python, CSS, etc.',
-    lbl_lang:'Script Language', lbl_title:'Script Title *', title_ph:'e.g. Player Teleport System',
+    lbl_lang:'Script Language', lbl_lang2:'Language:',
+    lbl_title:'Script Title *', title_ph:'e.g. Player Teleport System',
     lbl_desc:'Description', desc_ph:'Briefly explain what this script does...',
     lbl_funcs:'Functions / Features', funcs_hint:'— one per line', funcs_ph:'Instant teleport to destination\nWorks for all players\nLightweight, no delay',
     lbl_thumb:'Thumbnail', thumb_hint:'— optional. If empty, a thumbnail is auto-generated from your script',
@@ -704,6 +803,31 @@ const I18N = {
     no_desc:'No description provided for this script.', no_funcs:'No functions listed by the author.',
     confirm_del:'Delete this script permanently?',
     save_btn:'Save', saved_btn:'Saved', lines_word:'lines', dl_word:'downloads',
+    scan_ok:'🛡 Verified Safe',
+    sys_script:'System Script',
+    sys_nodelete:'🔒 Cannot be deleted — this script belongs to the ScriptVault system.',
+    scan_running:'🛡 Scanning script security...',
+    scan_failed:'Security Check Failed',
+    scan_found:'Exploit patterns were detected in your script:',
+    scan_line:'Line',
+    scan_hint:'Security rules apply to <b>Lua, JavaScript, Python, and Shell</b>. HTML, CSS, and JSON types are free-text (great for displaying scripts). TXT type may contain anything — even loadstring — but is <b>protected: it cannot be copied or selected</b>.',
+    scan_pass:'Script is safe ✓',
+    ban_msg:'Upload access is blocked for 3 minutes due to a security violation.',
+    ban_wait:'🚫 Blocked — try again in {t}',
+    ban_over:'Ban lifted. You can upload again ✓',
+    txt_nocopy:'🔒 TXT scripts are protected — text cannot be copied or selected.',
+    txt_nodl:'🔒 TXT scripts are protected — cannot be downloaded.',
+    prot_btn:'Protected', prot_badge:'Protected', prot_note:'Copy Protection Active',
+    prot_chip:'🔒 Copy Protected',
+    rule_r1:'Remote execution: loadstring() + game:HttpGet()',
+    rule_r2:'Use of loadstring() — dynamic code execution is not allowed',
+    rule_r3:'Exploit API detected (getgenv / hookfunction, etc.)',
+    rule_r4:'eval() with unsafe source (atob / fetch / game)',
+    rule_http:'Remote call game:HttpGet()',
+    rule_fire:'"fire*" words are banned (e.g. firetouchinterest) — only "FireServer" is allowed',
+    rule_kw:'Exploit keywords detected (ESP / NOCLIP / FLY / INVISIBLE / Client-sided / Dex)',
+    set_manage:'Manage Scripts', set_manage_sub:'— system scripts are locked and cannot be deleted',
+    manage_empty:'No scripts to manage yet.',
     hist_title:'Activity History', hist_sub:'Scripts you have opened, newest first.',
     hist_empty:'No history yet. Open a script and your trail will appear here.', hist_clear:'Clear History',
     set_title:'Appearance Settings', set_accent:'Accent Color', set_accent_sub:'Main color theme of the whole site',
@@ -719,7 +843,7 @@ const I18N = {
     t_downloaded:'Script downloaded ⬇', t_saved:'Saved to collection ★', t_unsaved:'Removed from saved',
     t_gone:'Script is no longer available.', t_hist_clear:'History cleared.', t_thumb_img:'File must be an image.',
     t_black:'Black detected — reverted to default.', t_reset:'Settings restored to default.',
-    t_applied:'Settings applied ✓',
+    t_applied:'Settings applied ✓', t_txt_ok:'TXT type: free text, automatically copy-protected ✓',
     time_just:'just now', time_min:'{n} min ago', time_hour:'{n} h ago', time_day:'{n} d ago'
   }
 };
@@ -732,6 +856,7 @@ function t(key, vars){
 
 /* ================= Utils ================= */
 const $ = s => document.querySelector(s);
+const delay = ms => new Promise(r=>setTimeout(r,ms));
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function hexToRgb(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
 function rgba(h,a){ const c=hexToRgb(h); return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
@@ -739,6 +864,7 @@ function mix(h1,h2,p){ const a=hexToRgb(h1),b=hexToRgb(h2); return '#'+a.map((v,
 function lum(h){ const c=hexToRgb(h); return (0.299*c[0]+0.587*c[1]+0.114*c[2])/255; }
 function fmtDate(ts){ return new Date(ts).toLocaleDateString(LANG==='id'?'id-ID':'en-US',{day:'numeric',month:'short',year:'numeric'}); }
 function fmtSize(str){ const b=new Blob([str]).size; return b<1024? b+' B' : (b/1024).toFixed(1)+' KB'; }
+function fmtMS(ms){ const s=Math.ceil(ms/1000); const m=Math.floor(s/60); return String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 function relTime(ts){
   const d=Date.now()-ts, m=Math.floor(d/60000);
   if(m<1) return t('time_just');
@@ -758,7 +884,6 @@ const DEF_SET = {accent:'#d4af37', bg:'#0a0a0f', text:'#ece9e2', fontBody:'Manro
 const SERIF_FONTS = ['Playfair Display','Lora'];
 let settings = Object.assign({}, DEF_SET);
 try{ settings = Object.assign({}, DEF_SET, JSON.parse(localStorage.getItem('sv_settings_v1'))||{}); }catch(e){}
-
 function fontStack(name){ return '"'+name+'", '+(SERIF_FONTS.indexOf(name)>=0?'Georgia, serif':'system-ui, sans-serif'); }
 function applySettings(){
   const r=document.documentElement.style, a=settings.accent;
@@ -799,6 +924,7 @@ const state={ q:'', lang:'Semua' };
 let currentId=null;
 const pending={ mode:'file', code:'', lang:'HTML', fileName:'', thumb:null };
 
+const ALL_LANGS=['HTML','Lua','JavaScript','Python','CSS','JSON','Shell','TXT'];
 const EXT={HTML:'html',Lua:'lua',JavaScript:'js',Python:'py',CSS:'css',JSON:'json',Shell:'sh',TXT:'txt'};
 const LANG_COLOR={HTML:'#ff7849',Lua:'#5b95f5',JavaScript:'#f5d34f',Python:'#4fd0a0',CSS:'#b78cff',JSON:'#8ef7c3',Shell:'#b8e04f',TXT:'#9aa4b5'};
 const EXT_MAP={html:'HTML',htm:'HTML',lua:'Lua',js:'JavaScript',mjs:'JavaScript',jsx:'JavaScript',py:'Python',css:'CSS',json:'JSON',sh:'Shell',bat:'Shell',txt:'TXT',md:'TXT'};
@@ -806,6 +932,89 @@ function langFromExt(name){ const e=(name.split('.').pop()||'').toLowerCase(); r
 function prettyName(fn){ return fn.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase()); }
 function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'script'; }
 function isSaved(id){ return !!(reacts[id]&&reacts[id].saved); }
+function isSystem(it){ return !!it.system; }
+
+/* ================= Blokir 3 menit ================= */
+const BAN_MS = 3*60*1000;
+let banUntil = parseInt(localStorage.getItem('sv_ban_until')||'0',10)||0;
+function isBanned(){ return Date.now() < banUntil; }
+function banRemaining(){ return Math.max(0, banUntil-Date.now()); }
+function setBan(){ banUntil=Date.now()+BAN_MS; localStorage.setItem('sv_ban_until', String(banUntil)); }
+function updateBanUI(){
+  const bar=$('#banBar'), btn=$('#publishBtn');
+  if(!bar||!btn) return;
+  if(isBanned()){
+    bar.hidden=false;
+    bar.innerHTML='🚫 '+t('ban_msg')+' &nbsp;<b>'+fmtMS(banRemaining())+'</b>';
+    if(!btn.classList.contains('scanning')){
+      btn.classList.add('banned');
+      btn.textContent=t('ban_wait',{t:fmtMS(banRemaining())});
+    }
+  }else{
+    if(!bar.hidden){
+      bar.hidden=true;
+      if($('#uploadModal').classList.contains('open')) toast(t('ban_over'));
+    }
+    btn.classList.remove('banned');
+    if(!btn.classList.contains('scanning')) btn.textContent=t('publish');
+  }
+}
+
+/* ================= Pengecekan Keamanan Script =================
+   Lingkup:
+   - Lua / JavaScript / Python / Shell  → dipindai penuh.
+   - HTML / CSS / JSON                  → bebas teks (tidak dipindai),
+                                           aman walau ada kata loadstring.
+   - TXT                                → bebas apa pun, TAPI hasil upload
+                                           dilindungi: tidak bisa disalin /
+                                           diseleksi / diunduh.
+   Pelanggaran pada bahasa yang dipindai → blokir upload 3 menit.
+================================================================= */
+const SCAN_LANGS = ['Lua','JavaScript','Python','Shell'];
+const SEC_RULES = [
+  { id:'rule_r1',   re:/loadstring\s*\(\s*game\s*:\s*HttpGet(?:Async)?\s*\(/gi },
+  { id:'rule_fire', re:/\bfire\w+/gi, except:function(m){ return m.toLowerCase()==='fireserver'; } },
+  { id:'rule_kw',   re:/\besp\b|\bnoclip\b|\bfly\b|\binvisible\b|client[\s\-]?sided|\bdex\b/gi },
+  { id:'rule_r3',   re:/\b(?:getgenv|getrenv|hookfunction|hookmetamethod)\s*\(/gi },
+  { id:'rule_r4',   re:/\beval\s*\(\s*(?:atob\s*\(|(?:await\s+)?fetch\s*\(|game\s*:)/gi },
+  { id:'rule_r2',   re:/\bloadstring\s*\(/gi },
+  { id:'rule_http', re:/game\s*:\s*HttpGet(?:Async)?\s*\(/gi }
+];
+function lineAt(code, idx){ return code.slice(0,idx).split('\n').length; }
+function scanScript(code){
+  const hits=[], seen={};
+  SEC_RULES.forEach(rule=>{
+    rule.re.lastIndex=0; let m;
+    while((m=rule.re.exec(code))){
+      if(rule.except && rule.except(m[0])){
+        if(m.index===rule.re.lastIndex) rule.re.lastIndex++;
+        continue;
+      }
+      const ln=lineAt(code,m.index);
+      const key=rule.id+'@'+ln;
+      if(!seen[key] && !seen['LINE'+ln]){
+        seen[key]=true; seen['LINE'+ln]=true;
+        const lineText=code.split('\n')[ln-1]||'';
+        hits.push({rule:rule.id, line:ln, snippet:lineText.trim().slice(0,90)});
+      }
+      if(m.index===rule.re.lastIndex) rule.re.lastIndex++;
+    }
+  });
+  hits.sort((a,b)=>a.line-b.line);
+  return hits.slice(0,8);
+}
+function showScanErrors(hits){
+  $('#scanList').innerHTML=hits.map(h=>
+    '<div class="scan-item">'+
+      '<div class="si-top">⚠ '+t('scan_line')+' '+h.line+' <span class="si-rule">— '+t(h.rule)+'</span></div>'+
+      '<code>'+esc(h.snippet)+'</code>'+
+    '</div>'
+  ).join('');
+  const box=$('#scanErr'); box.hidden=false;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+  const mb=$('#uploadBox');
+  mb.classList.remove('shake'); void mb.offsetWidth; mb.classList.add('shake');
+}
 
 /* ================= Syntax Highlighter ================= */
 const RULES = {
@@ -916,7 +1125,7 @@ function fileToDataURL(file,maxW){
   });
 }
 
-/* ================= Seed ================= */
+/* ================= Seed (script sistem) ================= */
 function seedData(){
   const s1 = `<!DOCTYPE html>
 <html>
@@ -1021,16 +1230,16 @@ if __name__ == "__main__":
   const seeds=[
     {id:'s1',title:'Kartu Profil Neon',desc:'Kartu profil elegan dengan efek cahaya emas yang menyala saat kursor diarahkan. Cocok untuk landing page, portofolio, atau halaman profil pribadi.',
      funcs:['Efek glow emas saat hover','Animasi naik halus (lift effect)','Desain gelap premium','Mudah dikustomisasi warna & ukuran'],
-     code:s1,lang:'HTML',date:now-86400000*3,downloads:128,likes:214,dislikes:6},
+     code:s1,lang:'HTML',date:now-86400000*3,downloads:128,likes:214,dislikes:6,system:true},
     {id:'s2',title:'Sistem Teleport Pemain',desc:'Script Lua untuk memindahkan pemain ke titik koordinat tertentu secara instan. Dilengkapi sambutan otomatis saat pemain bergabung ke dalam game.',
      funcs:['Teleport instan ke koordinat tujuan','Deteksi pemain baru otomatis','Aman digunakan berulang kali','Mudah diubah titik tujuannya'],
-     code:s2,lang:'Lua',date:now-86400000*2,downloads:96,likes:172,dislikes:3},
+     code:s2,lang:'Lua',date:now-86400000*2,downloads:96,likes:172,dislikes:3,system:true},
     {id:'s3',title:'Hujan Salju Canvas',desc:'Efek salju berjatuhan yang lembut menggunakan HTML5 Canvas dan requestAnimationFrame. Ringan, halus, dan siap dipasang di halaman web apa pun.',
      funcs:['120 butir salju dengan kecepatan acak','Animasi 60 FPS yang mulus','Otomatis kembali ke atas layar','Tanpa library eksternal'],
-     code:s3,lang:'JavaScript',date:now-86400000,downloads:74,likes:133,dislikes:2},
+     code:s3,lang:'JavaScript',date:now-86400000,downloads:74,likes:133,dislikes:2,system:true},
     {id:'s4',title:'Kalkulator Diskon',desc:'Program Python sederhana untuk menghitung harga akhir setelah diskon. Berjalan di terminal dengan tampilan input yang rapi dan mudah dipahami pemula.',
      funcs:['Input harga dan persentase diskon','Perhitungan potongan otomatis','Format output rapi','Struktur fungsi yang bersih'],
-     code:s4,lang:'Python',date:now-3600000*5,downloads:51,likes:88,dislikes:1}
+     code:s4,lang:'Python',date:now-3600000*5,downloads:51,likes:88,dislikes:1,system:true}
   ];
   seeds.forEach(s=>{ s.thumb=autoThumb(s.code,s.lang,s.title); });
   items=seeds; store.save(items);
@@ -1074,6 +1283,8 @@ function renderGrid(instant){
       '<div class="thumb">'+
         '<img src="'+it.thumb+'" alt="'+esc(it.title)+'" loading="lazy">'+
         '<span class="lang-badge">'+it.lang+'</span>'+
+        (isSystem(it)?'<span class="sys-badge"><i>🔒</i> '+t('sys_script')+'</span>'
+          : it.protected ?'<span class="sys-badge prot"><i>🔒</i> '+t('prot_badge')+'</span>':'')+
         '<div class="thumb-hover"><span>'+t('hint_open')+'</span></div>'+
       '</div>'+
       '<div class="card-body">'+
@@ -1089,7 +1300,6 @@ function renderGrid(instant){
     '</article>';
   }).join('');
 }
-I18N.id.hint_open='Lihat Detail ◆'; I18N.en.hint_open='View Details ◆';
 function animateNum(el,target){
   const dur=1000,t0=performance.now();
   (function f(t2){ const p=Math.min(1,(t2-t0)/dur);
@@ -1102,6 +1312,21 @@ function renderStats(){
   animateNum($('#stLines'),items.reduce((a,b)=>a+b.code.split('\n').length,0));
 }
 function renderAll(instant){ renderChips(); renderGrid(instant); renderStats(); }
+
+/* ================= Kelola Script ================= */
+function renderManage(){
+  const box=$('#manageList');
+  if(items.length===0){ box.innerHTML='<p style="color:var(--faint);font-size:13px;padding:8px 2px">'+esc(t('manage_empty'))+'</p>'; return; }
+  box.innerHTML=items.map(it=>
+    '<div class="mrow">'+
+      '<img src="'+it.thumb+'" alt="">'+
+      '<div class="mt"><h4>'+esc(it.title)+'</h4><small><b>'+it.lang+'</b> • '+fmtDate(it.date)+(it.protected?' • 🔒':'')+'</small></div>'+
+      (isSystem(it)
+        ? '<span class="mlock">🔒 '+t('sys_script')+'</span>'
+        : '<button class="mdel" data-del="'+it.id+'">🗑 '+t('delete')+'</button>')+
+    '</div>'
+  ).join('');
+}
 
 /* ================= Reactions ================= */
 function react(id,type){
@@ -1154,15 +1379,31 @@ function renderHistory(){
   ).join('');
 }
 
+/* ================= Hapus Script ================= */
+function tryDelete(id){
+  const it=items.find(i=>i.id===id); if(!it) return;
+  if(isSystem(it)){ toast(t('sys_nodelete'),'err'); return; }
+  if(!confirm(t('confirm_del'))) return;
+  items=items.filter(i=>i.id!==id);
+  store.save(items);
+  if(currentId===id) closeDetail();
+  renderAll(true); renderManage();
+  toast(t('t_deleted'));
+}
+
 /* ================= Detail ================= */
 function openDetail(id){
   const it=items.find(i=>i.id===id); if(!it) return;
   currentId=id;
   pushHistory(it);
+  const prot=!!it.protected;
   $('#dImg').src=it.thumb;
+  $('#dSys').hidden=!isSystem(it);
   $('#dTitle').textContent=it.title;
   $('#dMeta').innerHTML=
     '<span class="mchip gold">'+it.lang+'</span>'+
+    (isSystem(it)?'<span class="mchip gold">🔒 '+t('sys_script')+'</span>':'')+
+    (prot?'<span class="mchip prot">'+t('prot_chip')+'</span>':'<span class="mchip safe">'+t('scan_ok')+'</span>')+
     '<span class="mchip">📅 '+fmtDate(it.date)+'</span>'+
     '<span class="mchip">💾 '+fmtSize(it.code)+'</span>'+
     '<span class="mchip">☰ '+it.code.split('\n').length+' '+t('lines_word')+'</span>'+
@@ -1173,6 +1414,24 @@ function openDetail(id){
   $('#dDesc').textContent=it.desc||t('no_desc');
   const funcs=(it.funcs&&it.funcs.length)?it.funcs:[t('no_funcs')];
   $('#dFuncs').innerHTML=funcs.map(f=>'<li>'+esc(f)+'</li>').join('');
+
+  // proteksi TXT: tidak bisa disalin / diseleksi / diunduh
+  $('#codeBox').classList.toggle('protected',prot);
+  $('#protNote').hidden=!prot;
+  const cb=$('#copyBtn'), db=$('#dlBtn'), cm=$('#copyMini');
+  if(prot){
+    cb.innerHTML='🔒 '+t('prot_btn'); cb.classList.add('locked');
+    db.innerHTML='🔒 '+t('prot_btn'); db.classList.add('locked');
+    cm.textContent='🔒';
+  }else{
+    cb.innerHTML='⧉ <span>'+t('copy')+'</span>'; cb.classList.remove('locked');
+    db.innerHTML='⬇ <span>'+t('download')+'</span>'; db.classList.remove('locked');
+    cm.textContent=t('copy_mini');
+  }
+
+  const del=$('#delBtn');
+  if(isSystem(it)){ del.innerHTML='🔒 '+t('sys_script'); del.classList.add('locked'); }
+  else{ del.textContent=t('delete'); del.classList.remove('locked'); }
   updateDetailReact(it);
   const d=$('#detail'); d.scrollTop=0; d.classList.add('open'); d.setAttribute('aria-hidden','false');
   document.body.classList.add('locked');
@@ -1203,14 +1462,16 @@ function downloadItem(){
 /* ================= Modals ================= */
 function openModalById(id){ $('#'+id).classList.add('open'); $('#'+id).setAttribute('aria-hidden','false'); document.body.classList.add('locked'); }
 function closeModalById(id){ $('#'+id).classList.remove('open'); $('#'+id).setAttribute('aria-hidden','true'); document.body.classList.remove('locked'); }
-function openModal(){ openModalById('uploadModal'); }
+function openModal(){ updateBanUI(); openModalById('uploadModal'); }
 function closeModal(){ closeModalById('uploadModal'); resetForm(); }
 function resetForm(){
   pending.mode='file'; pending.code=''; pending.lang='HTML'; pending.fileName=''; pending.thumb=null;
   $('#fileInfo').hidden=true; $('#fileInfo').innerHTML='';
   $('#pasteArea').value=''; $('#fTitle').value=''; $('#fDesc').value=''; $('#fFuncs').value='';
   $('#fTitle').dataset.edited=''; $('#thumbPrev').hidden=true; $('#fileInput').value=''; $('#thumbInput').value='';
+  $('#scanErr').hidden=true;
   switchTab('file');
+  updateBanUI();
 }
 function switchTab(mode){
   pending.mode=mode;
@@ -1221,8 +1482,11 @@ function switchTab(mode){
 }
 function showFileInfo(){
   const fi=$('#fileInfo'); fi.hidden=false;
-  fi.innerHTML='<span class="pill">'+pending.lang+'</span><span class="fn">'+esc(pending.fileName)+'</span>'+
-    '<span class="mut">'+fmtSize(pending.code)+' • '+pending.code.split('\n').length+' '+t('lines_word')+'</span>';
+  const opts=ALL_LANGS.map(l=>'<option'+(l===pending.lang?' selected':'')+'>'+l+'</option>').join('');
+  fi.innerHTML='<span class="fn">'+esc(pending.fileName)+'</span>'+
+    '<span class="mut">'+fmtSize(pending.code)+' • '+pending.code.split('\n').length+' '+t('lines_word')+'</span>'+
+    '<label class="langpick">'+t('lbl_lang2')+' <select id="fileLangSel">'+opts+'</select></label>';
+  $('#fileLangSel').addEventListener('change',e=>{ pending.lang=e.target.value; $('#scanErr').hidden=true; });
 }
 async function onScriptFile(f){
   if(!f) return;
@@ -1233,10 +1497,18 @@ async function onScriptFile(f){
     showFileInfo();
     const ti=$('#fTitle');
     if(!ti.dataset.edited||!ti.value.trim()) ti.value=prettyName(f.name);
+    $('#scanErr').hidden=true;
     toast(t('t_file_loaded'));
   }catch(e){ toast(t('t_file_fail'),'err'); }
 }
-function publish(){
+
+/* ===== Publish + Pengecekan Script ===== */
+async function publish(){
+  if(isBanned()){
+    updateBanUI();
+    toast(t('ban_wait',{t:fmtMS(banRemaining())}),'err');
+    return;
+  }
   let code,lang;
   if(pending.mode==='file'){
     if(!pending.code){ toast(t('t_need_file'),'err'); return; }
@@ -1248,20 +1520,50 @@ function publish(){
   }
   const title=$('#fTitle').value.trim();
   if(!title){ toast(t('t_need_title'),'err'); return; }
+
+  const btn=$('#publishBtn');
+  btn.classList.add('scanning');
+  btn.textContent=t('scan_running');
+  $('#scanErr').hidden=true;
+
+  const isTXT = (lang==='TXT');
+  const isFreeText = isTXT || ['HTML','CSS','JSON'].indexOf(lang)>=0;
+
+  await delay(isFreeText?450:950);
+
+  if(!isFreeText){
+    // bahasa yang dipindai: Lua, JavaScript, Python, Shell
+    const hits=scanScript(code);
+    if(hits.length){
+      btn.classList.remove('scanning');
+      showScanErrors(hits);
+      setBan();          // blokir upload 3 menit
+      updateBanUI();
+      toast('⚠ '+t('scan_failed'),'err');
+      return;
+    }
+    toast(t('scan_pass'));
+  }else if(isTXT){
+    toast(t('t_txt_ok'));
+  }
+
   const item={
     id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
     title, desc:$('#fDesc').value.trim(),
     funcs:$('#fFuncs').value.split('\n').map(s=>s.trim()).filter(Boolean),
     code, lang,
     thumb: pending.thumb || autoThumb(code,lang,title),
-    date:Date.now(), downloads:0, likes:0, dislikes:0
+    date:Date.now(), downloads:0, likes:0, dislikes:0,
+    system:false, protected:isTXT
   };
   items.unshift(item);
   if(store.save(items)){
+    btn.classList.remove('scanning');
+    btn.textContent=t('publish');
     closeModal(); renderAll(true);
     toast(t('t_published'));
     setTimeout(()=>openDetail(item.id),350);
-  }else{ items.shift(); }
+  }else{ items.shift(); btn.classList.remove('scanning'); btn.textContent=t('publish'); }
 }
 
 /* ================= i18n apply ================= */
@@ -1271,7 +1573,8 @@ function applyI18n(){
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.setAttribute('placeholder',t(el.getAttribute('data-i18n-ph'))); });
   $('#langLabel').textContent=LANG.toUpperCase();
   renderChips(); renderGrid(true);
-  if(currentId){ const id=currentId; openDetail(id); }
+  updateBanUI();
+  if(currentId){ openDetail(currentId); }
 }
 
 /* ================= Loader ================= */
@@ -1302,6 +1605,9 @@ function runLoader(done){
 /* ================= Init ================= */
 function init(){
   if(items.length===0) seedData();
+  let mig=false;
+  items.forEach(i=>{ if(['s1','s2','s3','s4'].indexOf(i.id)>=0 && !i.system){ i.system=true; mig=true; } });
+  if(mig) store.save(items);
 
   window.addEventListener('scroll',()=>$('#hdr').classList.toggle('scrolled',window.scrollY>20));
   $('#searchInput').addEventListener('input',e=>{ state.q=e.target.value; renderGrid(true); });
@@ -1324,6 +1630,8 @@ function init(){
   $('#tabFile').addEventListener('click',()=>switchTab('file'));
   $('#tabPaste').addEventListener('click',()=>switchTab('paste'));
   $('#fTitle').addEventListener('input',e=>{ e.target.dataset.edited='1'; });
+  $('#pasteArea').addEventListener('input',()=>{ $('#scanErr').hidden=true; });
+  $('#pasteLang').addEventListener('change',()=>{ $('#scanErr').hidden=true; });
   const drop=$('#drop'), fi=$('#fileInput');
   drop.addEventListener('click',()=>fi.click());
   fi.addEventListener('change',()=>onScriptFile(fi.files[0]));
@@ -1353,7 +1661,11 @@ function init(){
   });
   $('#histClear').addEventListener('click',()=>{ historyArr=[]; saveHistory(); renderHistory(); toast(t('t_hist_clear')); });
 
-  $('#setBtn').addEventListener('click',()=>{ syncSettingInputs(); openModalById('settingsModal'); });
+  $('#setBtn').addEventListener('click',()=>{ syncSettingInputs(); renderManage(); openModalById('settingsModal'); });
+  $('#manageList').addEventListener('click',e=>{
+    const b=e.target.closest('[data-del]'); if(!b) return;
+    tryDelete(b.dataset.del);
+  });
   $('#sAccent').addEventListener('input',e=>{ settings.accent=e.target.value; applySettings(); saveSettings(); });
   document.querySelectorAll('.swatch:not(.bgsw)').forEach(s=>s.addEventListener('click',()=>{
     settings.accent=s.dataset.c; $('#sAccent').value=s.dataset.c; applySettings(); saveSettings(); toast(t('t_applied'));
@@ -1373,17 +1685,42 @@ function init(){
 
   /* detail */
   $('#backBtn').addEventListener('click',closeDetail);
-  $('#copyBtn').addEventListener('click',()=>{ const it=items.find(i=>i.id===currentId); if(it) copyText(it.code); });
-  $('#copyMini').addEventListener('click',()=>{ const it=items.find(i=>i.id===currentId); if(it) copyText(it.code); });
-  $('#dlBtn').addEventListener('click',downloadItem);
+  $('#copyBtn').addEventListener('click',()=>{
+    const it=items.find(i=>i.id===currentId); if(!it) return;
+    if(it.protected){ toast(t('txt_nocopy'),'err'); return; }
+    copyText(it.code);
+  });
+  $('#copyMini').addEventListener('click',()=>{
+    const it=items.find(i=>i.id===currentId); if(!it) return;
+    if(it.protected){ toast(t('txt_nocopy'),'err'); return; }
+    copyText(it.code);
+  });
+  $('#dlBtn').addEventListener('click',()=>{
+    const it=items.find(i=>i.id===currentId); if(!it) return;
+    if(it.protected){ toast(t('txt_nodl'),'err'); return; }
+    downloadItem();
+  });
   $('#delBtn').addEventListener('click',()=>{
-    if(!confirm(t('confirm_del'))) return;
-    items=items.filter(i=>i.id!==currentId); store.save(items);
-    closeDetail(); renderAll(true); toast(t('t_deleted'));
+    const it=items.find(i=>i.id===currentId); if(!it) return;
+    if(isSystem(it)){ toast(t('sys_nodelete'),'err'); return; }
+    tryDelete(it.id);
   });
   $('#rLike').addEventListener('click',()=>currentId&&react(currentId,'like'));
   $('#rDislike').addEventListener('click',()=>currentId&&react(currentId,'dislike'));
   $('#rSave').addEventListener('click',()=>currentId&&react(currentId,'save'));
+
+  /* proteksi TXT: blokir klik kanan & copy di blok kode */
+  $('#codeBox').addEventListener('contextmenu',e=>{
+    const it=items.find(i=>i.id===currentId);
+    if(it&&it.protected) e.preventDefault();
+  });
+  document.addEventListener('copy',e=>{
+    const it=items.find(i=>i.id===currentId);
+    if(it&&it.protected){
+      const sel=window.getSelection();
+      if(sel&&sel.anchorNode&&$('#codeBox').contains(sel.anchorNode)) e.preventDefault();
+    }
+  });
 
   document.addEventListener('keydown',e=>{
     if(e.key!=='Escape') return;
@@ -1391,11 +1728,14 @@ function init(){
     if($('#detail').classList.contains('open')) closeDetail();
   });
 
+  /* update countdown blokir setiap 500ms */
+  setInterval(updateBanUI,500);
+
   applyI18n();
   renderStats();
 }
 
-/* start: apply settings dulu, lalu loading bar, lalu aplikasi */
+/* start: terapkan pengaturan → loading bar → aplikasi */
 applySettings();
 window.addEventListener('load',()=>{
   runLoader(()=>{
